@@ -26,7 +26,8 @@ const CategorySelect: React.FC<Props> = () => {
   return (
     <StyledWrapper>
       <div ref={dropdownRef} className="wrapper" onClick={handleOpen}>
-        {currentCategory} Posts <MdExpandMore />
+        {/* 여기가 카테고리 보는곳 */}
+        {currentCategory} <MdExpandMore />
       </div>
       {opened && (
         <div className="content">

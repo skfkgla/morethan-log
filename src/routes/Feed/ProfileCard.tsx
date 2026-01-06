@@ -34,7 +34,7 @@ const StyledWrapper = styled.div`
     margin-bottom: 0.75rem;
   }
   > .content {
-    margin-bottom: 2.25rem;
+    margin-bottom: 1rem;
     border-radius: 1rem;
     width: 100%;
     background-color: ${({ theme }) =>
@@ -66,14 +66,14 @@ const StyledWrapper = styled.div`
         font-weight: 700;
       }
       .role {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         font-size: 0.875rem;
         line-height: 1.25rem;
         color: ${({ theme }) => theme.colors.gray11};
       }
       .bio {
-        margin-bottom: 0.5rem;
-        font-size: 0.875rem;
+        margin-bottom: 0rem;
+        font-size: 1rem;
         line-height: 1.25rem;
         text-align: center;
         white-space: pre-line;

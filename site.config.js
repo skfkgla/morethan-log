@@ -1,7 +1,7 @@
 const CONFIG = {
   profile: {
     name: "narahim",
-    image: "/avartar.png",
+    image: "/avatar.png",
     role: "Backend Developer",
     bio: "데이터 기반 의사결정으로 문제를 해결하는 백엔드 개발자",
     email: "narahim.lee@gmail.com",
@@ -67,7 +67,7 @@ const CONFIG = {
     },
   },
   isProd: process.env.VERCEL_ENV === "production", // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-  revalidateTime: 60, // revalidate time for [slug], index
+  revalidateTime: 3600, // revalidate time for [slug], index
 }
 
 module.exports = { CONFIG }

@@ -3,7 +3,7 @@ const CONFIG = {
     name: "narahim",
     image: "/avatar.png",
     role: "Backend Developer",
-    bio: "왜를 고민하고, 기록하며 성장하는 백엔드 개발자",
+    bio: "왜를 고민하고,\n기록하며 성장하는 백엔드 개발자",
     email: "narahim.lee@gmail.com",
     linkedin: "",
     github: "skfkgla",

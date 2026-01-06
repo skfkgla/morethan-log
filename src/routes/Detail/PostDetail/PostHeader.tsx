@@ -48,16 +48,18 @@ const PostHeader: React.FC<Props> = ({ data }) => {
               </div>
             )}
           </div>
-          {data.thumbnail && (
-            <div className="thumbnail">
-              <Image
-                src={data.thumbnail}
-                css={{ objectFit: "cover" }}
-                fill
-                alt={data.title}
-              />
-            </div>
-          )}
+{/* 썸네일 숨김
+{data.thumbnail && (
+  <div className="thumbnail">
+    <Image
+      src={data.thumbnail}
+      css={{ objectFit: "cover" }}
+      fill
+      alt={data.title}
+    />
+  </div>
+)}
+*/}
         </nav>
       )}
     </StyledWrapper>

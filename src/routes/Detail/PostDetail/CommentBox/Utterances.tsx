@@ -19,21 +19,24 @@ const Utterances: React.FC<Props> = ({ issueTerm }) => {
     const script = document.createElement("script")
     const anchor = document.getElementById("comments")
     if (!anchor) return
-
-    script.setAttribute("src", "https://utteranc.es/client.js")
-    script.setAttribute("crossorigin", "anonymous")
-    script.setAttribute("async", `true`)
+  
+    script.src = "https://utteranc.es/client.js"
+    script.async = true
+    script.crossOrigin = "anonymous"
     script.setAttribute("issue-term", issueTerm)
     script.setAttribute("theme", theme)
+  
     const config: Record<string, string> = CONFIG.utterances.config
-    Object.keys(config).forEach((key) => {
-      script.setAttribute(key, config[key])
+    Object.entries(config).forEach(([key, value]) => {
+      script.setAttribute(key, value)
     })
+  
     anchor.appendChild(script)
+  
     return () => {
       anchor.innerHTML = ""
     }
-  }, [scheme, router])
+  }, [scheme, issueTerm])
   return (
     <>
       <StyledWrapper id="comments">

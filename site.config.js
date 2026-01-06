@@ -1,7 +1,7 @@
 const CONFIG = {
   profile: {
     name: "narahim",
-    image: "/avartar.svg",
+    image: "/avartar.png",
     role: "Backend Developer",
     bio: "데이터 기반 의사결정으로 문제를 해결하는 백엔드 개발자",
     email: "narahim.lee@gmail.com",

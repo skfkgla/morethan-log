@@ -3,7 +3,7 @@ const CONFIG = {
     name: "narahim",
     image: "/avatar.png",
     role: "Backend Developer",
-    bio: "데이터 기반 의사결정으로 문제를 해결하는 백엔드 개발자",
+    bio: "왜를 고민하고, 기록하며 성장하는 백엔드 개발자",
     email: "narahim.lee@gmail.com",
     linkedin: "",
     github: "skfkgla",
@@ -30,7 +30,7 @@ const CONFIG = {
   },
 
   // CONFIG configration (required)
-  link: "https://morethan-log-54sw.vercel.app",
+  link: "https://himlog.vercel.app",
   since: 2026, // If leave this empty, current year will be used.
   lang: "ko-KR", // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES', 'ko-KR']
   ogImageGenerateURL: "https://og-image-korean.vercel.app", // The link to generate OG image, don't end with a slash

@@ -19,7 +19,7 @@ const ProfileCard: React.FC<Props> = () => {
         <div className="mid">
           <div className=" name">{CONFIG.profile.name}</div>
           <div className="role">{CONFIG.profile.role}</div>
-          <div className="text-sm mb-2">{CONFIG.profile.bio}</div>
+          <div className="bio">{CONFIG.profile.bio}</div>
         </div>
       </div>
     </StyledWrapper>
@@ -76,6 +76,7 @@ const StyledWrapper = styled.div`
         font-size: 0.875rem;
         line-height: 1.25rem;
         text-align: center;
+        white-space: pre-line;
       }
     }
   }

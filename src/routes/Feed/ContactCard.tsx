@@ -64,6 +64,8 @@ const StyledWrapper = styled.div`
   border-radius: 1rem;
   background-color: ${({ theme }) =>
     theme.scheme === "light" ? "white" : theme.colors.gray4};
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
   a {
     display: flex;
     padding: 0.75rem;

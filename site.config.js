@@ -24,9 +24,10 @@ const CONFIG = {
   ],
   // blog setting (required)
   blog: {
-    title: "기록의 him",
-    description: "백엔드 개발 이야기",
-    scheme: "dark", // 'light' | 'dark' | 'system'
+    title: "기록의 힘",
+    description: "왜를 고민하고 기록하며 성장하는 백엔드 개발자 narahim의 기술 블로그입니다.",
+    keywords: ["기록의 힘", "백엔드 개발자", "자바", "스프링", "Java", "Spring Boot", "트러블슈팅", "기술 블로그", "narahim", "성장 기록"],
+    scheme: "system", // 'light' | 'dark' | 'system'
   },
 
   // CONFIG configration (required)

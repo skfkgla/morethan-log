@@ -20,6 +20,7 @@ export const colors = {
     ...blue,
     ...red,
     ...green,
+    gray2: "#f1f1f1",
   },
   dark: {
     ...indigoDark,

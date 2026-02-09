@@ -32,11 +32,10 @@ const Feed: React.FC<Props> = () => {
       <div className="mid">
         <MobileProfileCard />
         <PinnedPosts q={q} />
-        <SearchInput value={q} onChange={(e) => setQ(e.target.value)} />
         <div className="tags">
           <TagList />
         </div>
-        <FeedHeader />
+        <FeedHeader q={q} onChange={(e) => setQ(e.target.value)} />
         <PostList q={q} />
         <div className="footer">
           <Footer />

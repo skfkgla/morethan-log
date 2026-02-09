@@ -19,9 +19,13 @@ export function filterPosts({
   return posts
     .filter((post) => {
       const tagContent = post.tags ? post.tags.join(" ") : ""
-      const searchContent = post.title + post.summary + tagContent
+      const searchContent = post.title + " " + (post.summary || "") + " " + tagContent
+
+      const normalizedQuery = q.replace(/\s/g, "").toLowerCase()
+      const normalizedContent = searchContent.replace(/\s/g, "").toLowerCase()
+
       return (
-        searchContent.toLowerCase().includes(q.toLowerCase()) &&
+        normalizedContent.includes(normalizedQuery) &&
         (!tag || (post.tags && post.tags.includes(tag))) &&
         (category === DEFAULT_CATEGORY ||
           (post.category && post.category.includes(category)))

@@ -4,12 +4,18 @@ import CategorySelect from "./CategorySelect"
 import OrderButtons from "./OrderButtons"
 import styled from "@emotion/styled"
 
-type Props = {}
+import SearchInput from "../SearchInput"
 
-const FeedHeader: React.FC<Props> = () => {
+type Props = {
+  q: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const FeedHeader: React.FC<Props> = ({ q, onChange }) => {
   return (
     <StyledWrapper>
       <CategorySelect />
+      <SearchInput value={q} onChange={onChange} />
       <OrderButtons />
     </StyledWrapper>
   )

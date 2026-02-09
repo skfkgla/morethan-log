@@ -74,6 +74,12 @@ const CONFIG = {
       appid: "", // Embed Code -> data-app-id value
     },
   },
+  slack: {
+    enable: process.env.SLACK_WEBHOOK_URL ? true : false,
+    config: {
+      url: process.env.SLACK_WEBHOOK_URL || "",
+    },
+  },
   isProd: process.env.VERCEL_ENV === "production", // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   revalidateTime: 3600, // revalidate time for [slug], index
 }

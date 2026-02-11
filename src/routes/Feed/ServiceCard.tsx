@@ -12,17 +12,23 @@ const ServiceCard: React.FC = () => {
         <Emoji>🌟</Emoji> Project
       </StyledTitle>
       <StyledWrapper>
-        {CONFIG.projects.map((project, idx) => (
-          <a
-            key={idx}
-            href={`${project.href}`}
-            rel="noreferrer"
-            target="_blank"
-          >
-            <AiFillCodeSandboxCircle className="icon" />
-            <div className="name">{project.name}</div>
-          </a>
-        ))}
+        {CONFIG.projects.map((project, idx) => {
+          const [title, description] = project.name.split('\n')
+          return (
+            <a
+              key={idx}
+              href={project.href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <AiFillCodeSandboxCircle className="icon" />
+              <div className="name">
+                <div className="title">{title}</div>
+                <div className="description">{description}</div>
+              </div>
+            </a>
+          )
+        })}
       </StyledWrapper>
     </>
   )
@@ -61,10 +67,26 @@ const StyledWrapper = styled.div`
     .icon {
       font-size: 1.5rem;
       line-height: 2rem;
+      flex-shrink: 0;
+      min-width: 1.5rem;
     }
     .name {
-      font-size: 0.875rem;
-      line-height: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      
+      .title {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: ${({ theme }) => theme.colors.gray12};
+      }
+      
+      .description {
+        font-size: 0.75rem;
+        line-height: 1.2;
+        color: ${({ theme }) => theme.colors.gray10};
+      }
     }
   }
 `

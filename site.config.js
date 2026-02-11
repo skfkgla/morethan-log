@@ -10,15 +10,15 @@ const CONFIG = {
   },
   projects: [
     {
-      name: `SSaG - 패션 최저가 검색 서비스`,
+      name: `SSaG\n패션 최저가 검색 서비스`,
       href: "https://github.com/nbc-expert-6/SSaG",
     },
     {
-      name: `ShoongLogistics - B2B 물류 관리 서비스`,
+      name: `ShoongLogistics\nB2B 물류 관리 서비스`,
       href: "https://github.com/nbc-expert-6/ShoongLogistics",
     },
     {
-      name: `Turkey - B2C 음식 배달 서비스`,
+      name: `Turkey\nB2C 음식 배달 서비스`,
       href: "https://github.com/turkey-team/delivery-service-backend",
     },
   ],

@@ -85,8 +85,39 @@ const StyledWrapper = styled.div`
   }
   .notion-page {
     padding: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    transition: max-width 0.3s ease-in-out;
   }
   .notion-list {
     width: 100%;
+  }
+  .notion-asset-wrapper,
+  .notion-asset-wrapper-full,
+  .notion-asset-wrapper-center,
+  .notion-image-block,
+  .notion-video-block,
+  .notion-file-block,
+  .notion-audio-block,
+  .notion-full-width,
+  .notion-image-full {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .notion-asset-wrapper > div,
+  .notion-image-block > div {
+    height: auto !important;
+    aspect-ratio: auto !important;
+  }
+
+  .notion-asset-wrapper img,
+  .notion-asset-wrapper video,
+  .notion-image-block img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
   }
 `

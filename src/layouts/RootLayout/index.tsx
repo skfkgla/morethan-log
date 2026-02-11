@@ -40,12 +40,20 @@ import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import "prismjs/components/prism-go.js"
 
+import useFullWidth from "src/hooks/useFullWidth"
+import { useRouter } from "next/router"
+
 type Props = {
   children: ReactNode
 }
 
 const RootLayout = ({ children }: Props) => {
+  const router = useRouter()
   const [scheme] = useScheme()
+  const [fullWidth] = useFullWidth()
+  const isHomePage = router.pathname === "/"
+  const effectiveFullWidth = isHomePage ? false : fullWidth
+
   useGtagEffect()
   useEffect(() => {
     Prism.highlightAll();
@@ -56,8 +64,8 @@ const RootLayout = ({ children }: Props) => {
       <Scripts />
       {/* // TODO: replace react query */}
       {/* {metaConfig.type !== "Paper" && <Header />} */}
-      <Header fullWidth={false} />
-      <StyledMain>{children}</StyledMain>
+      <Header fullWidth={effectiveFullWidth} />
+      <StyledMain data-full-width={effectiveFullWidth} data-is-home={isHomePage}>{children}</StyledMain>
     </ThemeProvider>
   )
 }
@@ -69,4 +77,11 @@ const StyledMain = styled.main`
   width: 100%;
   max-width: 1120px;
   padding: 0 1rem;
+  transition: max-width 0.3s ease-in-out;
+  &[data-full-width="true"] {
+    max-width: calc(100% - 2rem);
+  }
+  &[data-is-home="true"] {
+    transition: none !important;
+  }
 `

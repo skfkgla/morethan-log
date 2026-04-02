@@ -19,60 +19,96 @@ export const getPosts = async () => {
 
     const response = await api.getPage(id)
     id = idToUuid(id)
-    const collectionKey = Object.keys(response.collection)[0]
-    const collectionValue = response.collection[collectionKey]?.value as any
-    const isDoubleWrapped = !!collectionValue?.value
-    const collection = isDoubleWrapped ? collectionValue.value : collectionValue
+    
+    // Recursive helper to unwrap nested 'value' fields (Depth Fix)
+    const getVal = (obj: any, key: string) => {
+      let res = obj?.[key]
+      if (!res) return null
+      while (Array.isArray(res) || res?.value) {
+        if (Array.isArray(res)) res = res[0]
+        else if (res?.value) res = res.value
+        else break
+      }
+      return res
+    }
 
-    const block = response.block
+    const collectionKey = Object.keys(response.collection || {})[0]
+    const collection = getVal(response.collection, collectionKey)
     const schema = collection?.schema
 
-    const rawMetadataValue = block[id].value as any
-    const isMetadataDoubleWrapped = !!rawMetadataValue?.value
-    const rawMetadata = isMetadataDoubleWrapped ? rawMetadataValue.value : rawMetadataValue
+    const rawMetadata = getVal(response.block, id)
 
-    // Check Type
-    if (
-      rawMetadata?.type !== "collection_view_page" &&
-      rawMetadata?.type !== "collection_view"
-    ) {
-      await sendSlackMessage(`🚨 [himlog] 노션 JSON 반환 구조가 변경된 것으로 보입니다. 페이지 타입(${rawMetadata?.type})이 예상과 다릅니다.`)
-      return []
-    } else {
-      // Construct Data
-      const pageIds = getAllPageIds(response)
+    // Construct Data
+    let pageIds = getAllPageIds(response)
+    
+    // Fallback: collection_query가 비어있으면 getCollectionData로 직접 요청
+    if (pageIds.length === 0) {
+      const collectionKey = Object.keys(response.collection || {})[0]
+      const collectionViewId = Object.keys(response.collection_view || {})[0]
 
-      if (pageIds.length === 0) {
-        await sendSlackMessage(`🚨 [himlog] 노션 컬렉션에서 페이지 ID를 찾을 수 없습니다. (개수: 0) JSON 구조 변경이 의심됩니다.`)
-      }
+      if (collectionKey && collectionViewId) {
+        const collectionView = getVal(response.collection_view, collectionViewId)
+        const collectionData = (await api.getCollectionData(
+          collectionKey,
+          collectionViewId,
+          collectionView,
+          { loadContentCover: false }
+        )) as any
 
-      const data = []
-      for (let i = 0; i < pageIds.length; i++) {
-        const id = pageIds[i]
-        const properties = (await getPageProperties(id, block, schema)) || null
-        const blockValue = (block[id].value as any)?.value || block[id].value
-        // Add fullwidth, createdtime to properties
-        if (properties) {
-          properties.createdTime = new Date(
-            blockValue?.created_time
-          ).toString()
-          properties.fullWidth =
-            (blockValue?.format as any)?.page_full_width ?? false
+        // 실제 블록 데이터를 response.block에 병합
+        const recordMapBlocks = collectionData?.recordMap?.block || {}
+        Object.assign(response.block, recordMapBlocks)
 
-          data.push(properties)
+        // collection_query 채우기
+        const blockIds: string[] =
+          collectionData?.result?.reducerResults?.collection_group_results
+            ?.blockIds ||
+          collectionData?.result?.blockIds ||
+          []
+
+        if (blockIds.length > 0) {
+          response.collection_query = {
+            [collectionKey]: {
+              [collectionViewId]: {
+                collection_group_results: { blockIds, total: blockIds.length },
+              },
+            },
+          } as any
+          pageIds = getAllPageIds(response)
+        }
+
+        // 그래도 없으면 page_sort 사용
+        if (pageIds.length === 0) {
+          pageIds = collectionView?.page_sort || []
         }
       }
-
-      // Sort by date
-      data.sort((a: any, b: any) => {
-        const dateA: any = new Date(a?.date?.start_date || a.createdTime)
-        const dateB: any = new Date(b?.date?.start_date || b.createdTime)
-        return dateB - dateA
-      })
-
-      const posts = data as TPosts
-      return posts
     }
+
+    const data = []
+    for (let i = 0; i < pageIds.length; i++) {
+      const pid = pageIds[i]
+      const properties = (await getPageProperties(pid, response.block, schema)) || null
+      const blockValue = getVal(response.block, pid)
+      
+      if (properties && properties.title) {
+        properties.createdTime = new Date(
+          blockValue?.created_time || Date.now()
+        ).toString()
+        properties.fullWidth =
+          (blockValue?.format as any)?.page_full_width ?? false
+
+        data.push(properties)
+      }
+    }
+
+    // Sort by date
+    data.sort((a: any, b: any) => {
+      const dateA: any = new Date(a?.date?.start_date || a.createdTime)
+      const dateB: any = new Date(b?.date?.start_date || b.createdTime)
+      return dateB - dateA
+    })
+
+    return data as TPosts
   } catch (error: any) {
     console.error("getPosts 예외 발생:", error)
     await sendSlackMessage(`🚨 [himlog] 게시글을 가져오는 중 예외가 발생했습니다: ${error.message}`)

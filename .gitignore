@@ -39,3 +39,7 @@ yarn-error.log*
 # public/sitemap.xml
 
 /.firebase
+
+# debug
+response-v1.json
+inspect_notion.js

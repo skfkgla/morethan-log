@@ -40,7 +40,7 @@ async function getPageProperties(
     } else {
       switch (s.type) {
         case "date": {
-          const dateProperty = val?.[0]?.[1]?.[0]?.[1]
+          const dateProperty = (val as any)?.[0]?.[1]?.[0]?.[1]
           if (dateProperty && typeof dateProperty === "object") {
             properties[s.name] = dateProperty
           } else {

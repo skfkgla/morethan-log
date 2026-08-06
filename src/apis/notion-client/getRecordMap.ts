@@ -1,8 +1,10 @@
 import { NotionAPI } from "notion-client"
 
+import { NOTION_GOT_OPTIONS } from "./gotOptions"
+
 export const getRecordMap = async (pageId: string) => {
   const api = new NotionAPI()
-  const recordMap = await api.getPage(pageId)
+  const recordMap = await api.getPage(pageId, { gotOptions: NOTION_GOT_OPTIONS })
 
   // Recursive helper to unwrap nested 'value' fields (Depth Fix)
   const getVal = (data: any) => {

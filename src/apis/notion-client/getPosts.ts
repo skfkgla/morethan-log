@@ -6,6 +6,7 @@ import getAllPageIds from "src/libs/utils/notion/getAllPageIds"
 import getPageProperties from "src/libs/utils/notion/getPageProperties"
 import { TPosts } from "src/types"
 import { sendSlackMessage } from "src/libs/utils/slack"
+import { NOTION_GOT_OPTIONS } from "./gotOptions"
 
 /**
  * @param {{ includePages: boolean }} - false: posts only / true: include pages
@@ -17,7 +18,7 @@ export const getPosts = async () => {
     let id = CONFIG.notionConfig.pageId as string
     const api = new NotionAPI()
 
-    const response = await api.getPage(id)
+    const response = await api.getPage(id, { gotOptions: NOTION_GOT_OPTIONS })
     id = idToUuid(id)
     
     // Recursive helper to unwrap nested 'value' fields (Depth Fix)
@@ -52,7 +53,7 @@ export const getPosts = async () => {
           collectionKey,
           collectionViewId,
           collectionView,
-          { loadContentCover: false }
+          { loadContentCover: false, gotOptions: NOTION_GOT_OPTIONS }
         )) as any
 
         // 실제 블록 데이터를 response.block에 병합
